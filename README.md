@@ -25,4 +25,4 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
       ii. Diagrama de bloques del camino de datos
       iii. Diagrama de estado de la máquina de control
    d. Implementación en codigo
-### dskjdad
+
