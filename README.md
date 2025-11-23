@@ -20,7 +20,7 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
    Se pidio realizar el diseño de un algoritmo que realice raiz cuadrada de un numero en base 2, las limitaciones que se impusieron fue que el resultado final seria la parte entera del resultado, omitiendo los decimales. Los numeros de entrada podran ser de maximo 8 digitos en sistema binario.
    
 #### 3.2 Diseño:
-   El diseño de la logica que seguiria el algoritmo esta basado en el [video](https://www.youtube.com/watch?v=t7kInZP8CpI).
+   El diseño de la logica que seguiria el algoritmo esta basado en este [video](https://www.youtube.com/watch?v=t7kInZP8CpI).
    Para la logica que tendra el diseño sera: A'' esta concatenado con A y X'' con X
    A es la entrada, A'' inicialmente es los 2 bits mas significativos de A y luego se convierte en el residuo para la operación.
    X es una variable de apoyo y X'' donde se ira escribiendo el resultado y n el numero de operaciones por hacer.
@@ -34,6 +34,7 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
 #### 3.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
    a. Diagrama de flujo del algoritmo
+   [Algoritmo_sqrt].(/imagenes/Algoritmo_sqrt)
    b. Diagrama de bloques del camino de datos
    c. Diagrama de estado de la máquina de control
 #### 3.4 Implementación en codigo
