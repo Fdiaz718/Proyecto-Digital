@@ -7,7 +7,115 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
 ## CALCULADORA
 ### 1. Multiplicador
+## Descripción General
 
+El multiplicador es un circuito digital que realiza la multiplicación de dos 
+números de 8 bits sin signo, generando un producto de 16 bits. El diseño 
+utiliza el algoritmo shift-and-add (desplazamiento y suma) implementado 
+mediante una arquitectura separada de datapath y máquina de control.
+
+## Parámetros de Diseño
+
+### Entradas
+- **A[7:0]**: Multiplicando (8 bits, sin signo)
+- **B[7:0]**: Multiplicador (8 bits, sin signo)
+- **start**: Señal de inicio de operación (activa en alto)
+- **clk**: Señal de reloj del sistema
+- **reset**: Reset asíncrono (activo en alto)
+
+### Salidas
+- **P[15:0]**: Producto resultante (16 bits, sin signo)
+- **busy**: Indicador de operación en curso (alto durante cálculo)
+- **done**: Indicador de operación completada (pulso de 1 ciclo)
+
+### Restricciones
+- Números sin signo únicamente
+- Rango de entrada: 0 a 255 para A y B
+- Rango de salida: 0 a 65025 para P
+- Operación síncrona con reloj
+
+## Algoritmo
+
+El multiplicador implementa el algoritmo shift-and-add:
+```
+1. Inicializar:
+   - P ← 0
+   - A_reg ← A
+   - B_reg ← B
+   - contador ← 8
+
+2. Mientras contador > 0:
+   a. Si B_reg[0] = 1:
+      - P ← P + A_reg
+   b. A_reg ← A_reg << 1 (desplazar izquierda)
+   c. B_reg ← B_reg >> 1 (desplazar derecha)
+   d. contador ← contador - 1
+### 4.1 Componentes Principales
+
+**Datapath (camino de datos):**
+- Registro A (8 bits): almacena multiplicando y se desplaza izquierda
+- Registro B (8 bits): almacena multiplicador y se desplaza derecha
+- Registro P (16 bits): acumulador del producto
+- Sumador (16 bits): realiza P + A_reg
+- Contador (4 bits): cuenta de 8 a 0
+- Lógica de desplazamiento
+
+**Máquina de Control (FSM):**
+- 6 estados: IDLE, LOAD, CHECK, ADD, SHIFT, DONE
+- Genera señales de control: load, add, shift, clear_P, dec_count
+- Recibe señales de estado: B_bit0, count_zero
+
+### 4.2 Señales Internas
+
+**Del FSM al Datapath:**
+- load: cargar operandos iniciales
+- clear_P: limpiar acumulador
+- add: realizar suma P + A_reg
+- shift: desplazar A y B
+- dec_count: decrementar contador
+
+**Del Datapath al FSM:**
+- B_bit0: bit menos significativo de B
+- count_zero: flag indicando contador en 0
+
+## Máquina de Estados
+
+### Estados:
+
+**IDLE**: Estado de espera
+   - Espera señal start
+   - busy = 0, done = 0
+
+**LOAD**: Carga de operandos
+   - Carga A y B en registros
+   - Inicializa P = 0
+   - Inicializa contador = 8
+   - Activa: load, clear_P
+   - busy = 1
+
+**CHECK**: Verificación de bit
+   - Revisa B_reg[0]
+   - No genera señales de control
+   - busy = 1
+   - Transición a ADD si B[0]=1, sino a SHIFT
+
+ **ADD**: Suma
+   - P = P + A_reg
+   - Activa: add
+   - busy = 1
+
+**SHIFT**: Desplazamiento
+   - A_reg << 1
+   - B_reg >> 1
+   - contador--
+   - Activa: shift, dec_count
+   - busy = 1
+   - Transición a CHECK si count≠0, sino a DONE
+
+*DONE**: Finalización
+   - Operación completa
+   - done = 1, busy = 0
+   - Retorna a IDLE
 
 
 ### 2. Divisor
