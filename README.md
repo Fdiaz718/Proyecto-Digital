@@ -6,23 +6,20 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
 
 ## CALCULADORA
-1. Multiplicador
-2. Divisor
-3. Raiz Cuadrada
-   a. Especificaciones iniciales:
-   b. Diseño:
+### 1. Multiplicador
+### 2. Divisor
+### 3. Raiz Cuadrada
+#### 3.1 Especificaciones iniciales:
+#### 3.2 Diseño:
    Para entender como 
-   c. Creación algoritmo, camino de datos (data pack) y maquina de estados
-      i.
-   d. Implementación en codigo
+#### 3.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
+   
+#### 3.4 Implementación en codigo
 
-5. Conversor BCD
-   a. Especificaciones iniciales:
-   b. Diseño:
+### 4. Conversor BCD
+#### 4.1 Especificaciones iniciales:
+#### 4.2 Diseño:
    Para entender como 
-   c. Creación algoritmo, camino de datos (data pack) y maquina de estados
-      i. Diagrama de flujo del algoritmo
-      ii. Diagrama de bloques del camino de datos
-      iii. Diagrama de estado de la máquina de control
-   d. Implementación en codigo
-
+#### 4.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
+   
+#### 4.4 Implementación en codigo
