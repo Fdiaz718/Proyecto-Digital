@@ -7,34 +7,34 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
 ## CALCULADORA
 ### 1. Multiplicador
-## Descripción General
+## 1.1 Descripción General
 
 El multiplicador es un circuito digital que realiza la multiplicación de dos 
 números de 8 bits sin signo, generando un producto de 16 bits. El diseño 
 utiliza el algoritmo shift-and-add (desplazamiento y suma) implementado 
 mediante una arquitectura separada de datapath y máquina de control.
 
-## Parámetros de Diseño
+## 1.2 Parámetros de Diseño
 
-### Entradas
+### 1.3 Entradas
 - **A[7:0]**: Multiplicando (8 bits, sin signo)
 - **B[7:0]**: Multiplicador (8 bits, sin signo)
 - **start**: Señal de inicio de operación (activa en alto)
 - **clk**: Señal de reloj del sistema
 - **reset**: Reset asíncrono (activo en alto)
 
-### Salidas
+### 1.4 Salidas
 - **P[15:0]**: Producto resultante (16 bits, sin signo)
 - **busy**: Indicador de operación en curso (alto durante cálculo)
 - **done**: Indicador de operación completada (pulso de 1 ciclo)
 
-### Restricciones
+### 1.5 Restricciones
 - Números sin signo únicamente
 - Rango de entrada: 0 a 255 para A y B
 - Rango de salida: 0 a 65025 para P
 - Operación síncrona con reloj
 
-## Algoritmo
+## 1.6 Algoritmo
 
 El multiplicador implementa el algoritmo shift-and-add:
 ```
@@ -50,7 +50,7 @@ El multiplicador implementa el algoritmo shift-and-add:
    b. A_reg ← A_reg << 1 (desplazar izquierda)
    c. B_reg ← B_reg >> 1 (desplazar derecha)
    d. contador ← contador - 1
-### 4.1 Componentes Principales
+### 1.7 Componentes Principales
 
 **Datapath (camino de datos):**
 - Registro A (8 bits): almacena multiplicando y se desplaza izquierda
@@ -65,7 +65,7 @@ El multiplicador implementa el algoritmo shift-and-add:
 - Genera señales de control: load, add, shift, clear_P, dec_count
 - Recibe señales de estado: B_bit0, count_zero
 
-### 4.2 Señales Internas
+### 1.8 Señales Internas
 
 **Del FSM al Datapath:**
 - load: cargar operandos iniciales
@@ -78,7 +78,7 @@ El multiplicador implementa el algoritmo shift-and-add:
 - B_bit0: bit menos significativo de B
 - count_zero: flag indicando contador en 0
 
-## Máquina de Estados
+## 1.9 Máquina de Estados
 
 ### Estados:
 
