@@ -34,7 +34,7 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
 #### 3.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
    a. Diagrama de flujo del algoritmo
-   [Algoritmo SQRT](https://github.com/user-attachments/assets/fd5449e3-0b25-40e9-b80b-85b10fd93b51)
+   ![Algoritmo SQRT](https://github.com/user-attachments/assets/fd5449e3-0b25-40e9-b80b-85b10fd93b51)
 
    b. Diagrama de bloques del camino de datos
    c. Diagrama de estado de la máquina de control
