@@ -35,10 +35,11 @@ Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 #### 3.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
    a. Diagrama de flujo del algoritmo
    ![sqr](https://github.com/user-attachments/assets/2581e3fc-8a5a-4ff0-b55f-c45fab63b8a9)
-
-
    b. Diagrama de bloques del camino de datos
+   ![dsaqrt](https://github.com/user-attachments/assets/f65443bf-f4f5-4be1-b230-edd8e4d10205)
    c. Diagrama de estado de la máquina de control
+   ![ssqrt](https://github.com/user-attachments/assets/b38eb982-da08-43a3-8bb7-12d3384a1f3f)
+
 #### 3.4 Implementación en codigo
 
 
