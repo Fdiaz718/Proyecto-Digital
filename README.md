@@ -2,8 +2,7 @@
 Integrantes:
 Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 
-
-* 1. DEPENDENCIAS
+1. DEPENDENCIAS
 
 * 2. CALCULADORA
   * 2.1 Multiplicador
