@@ -3,133 +3,81 @@ Integrantes:
 * Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 * Daniel Felipe Castro Gonzalez - dcastogon@unal.edu.co - 1052836051
 
-## DEPENDENCIAS
+ DEPENDENCIAS
 
 
 ## CALCULADORA
-### 1. Multiplicador
-## 1.1 Descripción General
+1. Multiplicador
+1.1 Especificaciones iniciales:
 
-El multiplicador es un circuito digital que realiza la multiplicación de dos 
-números de 8 bits sin signo, generando un producto de 16 bits. El diseño 
-utiliza el algoritmo shift-and-add (desplazamiento y suma) implementado 
-mediante una arquitectura separada de datapath y máquina de control.
+Se pidió diseñar un multiplicador secuencial de 8x8 bits que calcule el producto de dos números binarios.
+El resultado final será un número de 16 bits.
+El multiplicador debe operar de manera secuencial, usando sumas y desplazamientos, sin emplear operadores * directos.
+Se deben manejar correctamente las señales de inicio (start), ocupado (busy) y terminado (done).
 
-## 1.2 Parámetros de Diseño
+1.2 Diseño:
 
-### 1.3 Entradas
-- **A[7:0]**: Multiplicando (8 bits, sin signo)
-- **B[7:0]**: Multiplicador (8 bits, sin signo)
-- **start**: Señal de inicio de operación (activa en alto)
-- **clk**: Señal de reloj del sistema
-- **reset**: Reset asíncrono (activo en alto)
+El multiplicador está basado en un camino de datos que contiene registros para los operandos A y B, un registro para el producto P y un contador de iteraciones.
+La máquina de estados genera las señales de control para el datapath:
 
-### 1.4 Salidas
-- **P[15:0]**: Producto resultante (16 bits, sin signo)
-- **busy**: Indicador de operación en curso (alto durante cálculo)
-- **done**: Indicador de operación completada (pulso de 1 ciclo)
+Cargar los operandos en los registros internos.
 
-### 1.5 Restricciones
-- Números sin signo únicamente
-- Rango de entrada: 0 a 255 para A y B
-- Rango de salida: 0 a 65025 para P
-- Operación síncrona con reloj
+Comprobar el bit menos significativo de B; si es 1, sumar A al producto parcial.
 
-## 1.6 Algoritmo
+Desplazar los registros A y B según el algoritmo de multiplicación secuencial.
 
-El multiplicador implementa el algoritmo shift-and-add:
-```
-1. Inicializar:
-   - P ← 0
-   - A_reg ← A
-   - B_reg ← B
-   - contador ← 8
+Decrementar el contador de iteraciones.
 
-2. Mientras contador > 0:
-   a. Si B_reg[0] = 1:
-      - P ← P + A_reg
-   b. A_reg ← A_reg << 1 (desplazar izquierda)
-   c. B_reg ← B_reg >> 1 (desplazar derecha)
-   d. contador ← contador - 1
-### 1.7 Componentes Principales
+Repetir hasta completar 8 iteraciones.
 
-**Datapath (camino de datos):**
-- Registro A (8 bits): almacena multiplicando y se desplaza izquierda
-- Registro B (8 bits): almacena multiplicador y se desplaza derecha
-- Registro P (16 bits): acumulador del producto
-- Sumador (16 bits): realiza P + A_reg
-- Contador (4 bits): cuenta de 8 a 0
-- Lógica de desplazamiento
+Señalar done y liberar busy cuando el cálculo termina.
 
-**Máquina de Control (FSM):**
-- 6 estados: IDLE, LOAD, CHECK, ADD, SHIFT, DONE
-- Genera señales de control: load, add, shift, clear_P, dec_count
-- Recibe señales de estado: B_bit0, count_zero
+1.3 Creación algoritmo, camino de datos y máquina de estados
 
-### 1.8 Señales Internas
-
-**Del FSM al Datapath:**
-- load: cargar operandos iniciales
-- clear_P: limpiar acumulador
-- add: realizar suma P + A_reg
-- shift: desplazar A y B
-- dec_count: decrementar contador
-
-**Del Datapath al FSM:**
-- B_bit0: bit menos significativo de B
-- count_zero: flag indicando contador en 0
-
-## 1.9 Máquina de Estados
-
-### Estados:
-
-**IDLE**: Estado de espera
-   - Espera señal start
-   - busy = 0, done = 0
-
-**LOAD**: Carga de operandos
-   - Carga A y B en registros
-   - Inicializa P = 0
-   - Inicializa contador = 8
-   - Activa: load, clear_P
-   - busy = 1
-
-**CHECK**: Verificación de bit
-   - Revisa B_reg[0]
-   - No genera señales de control
-   - busy = 1
-   - Transición a ADD si B[0]=1, sino a SHIFT
-
- **ADD**: Suma
-   - P = P + A_reg
-   - Activa: add
-   - busy = 1
-
-**SHIFT**: Desplazamiento
-   - A_reg << 1
-   - B_reg >> 1
-   - contador--
-   - Activa: shift, dec_count
-   - busy = 1
-   - Transición a CHECK si count≠0, sino a DONE
-
-*DONE**: Finalización
-   - Operación completa
-   - done = 1, busy = 0
-   - Retorna a IDLE
-```
-## Diagramas
 ![diag flujo multiplicador](https://github.com/user-attachments/assets/67117f8c-bab7-48eb-a41d-3b22cb43202a)
 
 ![Datapath multiplicador](https://github.com/user-attachments/assets/b38eee89-7328-4819-9dd9-b8765638dd3d)
 
 ![diag estados multiplicador](https://github.com/user-attachments/assets/a219e7ae-4a5a-499d-b26e-6af6b5f9922e)
 
+1.4 Implementación en código
+
+Carpeta con códigos del multiplicador y testbench
+
+
+
 
 
 
 
 ### 2. Divisor
+2.1 Especificaciones iniciales:
+
+Se solicitó diseñar un divisor secuencial de 8 bits que calcule cociente y residuo.
+La división debe ser entera y el divisor no puede ser cero; en ese caso, se debe señalar div_zero.
+Se deben usar operaciones de resta condicional y desplazamiento, evitando el operador / directo.
+También se manejan las señales de inicio (start), ocupado (busy) y terminado (done).
+
+2.2 Diseño:
+
+El divisor usa un camino de datos con registros para el dividendo A, el divisor B, el residuo R y el cociente Q.
+La máquina de estados genera señales para:
+
+Cargar A y B en los registros internos.
+
+Comparar el residuo actual con B; si es mayor o igual, restar B y actualizar Q.
+
+Desplazar el residuo y el cociente según corresponda.
+
+Repetir hasta completar 8 iteraciones.
+
+Señalar done y liberar busy cuando el cálculo termina.
+
+Si B = 0, levantar div_zero.
+
+2.3 Creación algoritmo, camino de datos y máquina de estados
+
+
 
 
 
