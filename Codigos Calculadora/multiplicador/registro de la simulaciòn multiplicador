@@ -1,0 +1,283 @@
+ EOFmodulend count <= count - 1;; // Desplazamiento de 16 bits16
+
+bits
+
+(digital) daniel@daniel-Nitro-AN515-55:~/Documentos/multiplicador$
+
+iverilog -o mult_sim sim/tb_mult.v rtl/mult_top.v rtl/dp_mult.v
+
+rtl/control_mult.v
+
+(digital) daniel@daniel-Nitro-AN515-55:~/Documentos/multiplicador$ vvp
+
+mult_sim
+
+VCD info: dumpfile multiplicador.vcd opened for output.
+
+Inicio de pruebas
+
+t=0 | A= 0 B= 0 | P= 0 | busy=0 done=0
+
+Test 1: 5 x 3
+
+t=70000 | A= 5 B= 3 | P= 0 | busy=1 done=0
+
+t=90000 | A= 5 B= 3 | P= 0 | busy=1 done=0
+
+t=110000 | A= 5 B= 3 | P= 0 | busy=1 done=0
+
+t=130000 | A= 5 B= 3 | P= 5 | busy=1 done=0
+
+t=150000 | A= 5 B= 3 | P= 5 | busy=1 done=0
+
+t=170000 | A= 5 B= 3 | P= 5 | busy=1 done=0
+
+t=190000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=210000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=230000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=250000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=270000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=290000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=310000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=330000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=350000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=370000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=390000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=410000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=430000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=450000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=470000 | A= 5 B= 3 | P= 15 | busy=1 done=0
+
+t=490000 | A= 5 B= 3 | P= 15 | busy=0 done=1
+
+PASS - Resultado: 15
+
+t=510000 | A= 5 B= 3 | P= 15 | busy=0 done=0
+
+Test 2: 12 x 8
+
+t=610000 | A= 12 B= 8 | P= 15 | busy=1 done=0
+
+t=630000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=650000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=670000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=690000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=710000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=730000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=750000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=770000 | A= 12 B= 8 | P= 0 | busy=1 done=0
+
+t=790000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=810000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=830000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=850000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=870000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=890000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=910000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=930000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=950000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=970000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=990000 | A= 12 B= 8 | P= 96 | busy=1 done=0
+
+t=1010000 | A= 12 B= 8 | P= 96 | busy=0 done=1
+
+PASS - Resultado: 96
+
+t=1030000 | A= 12 B= 8 | P= 96 | busy=0 done=0
+
+Test 3: 255 x 255
+
+t=1130000 | A=255 B=255 | P= 96 | busy=1 done=0
+
+t=1150000 | A=255 B=255 | P= 0 | busy=1 done=0
+
+t=1170000 | A=255 B=255 | P= 0 | busy=1 done=0
+
+t=1190000 | A=255 B=255 | P= 255 | busy=1 done=0
+
+t=1210000 | A=255 B=255 | P= 255 | busy=1 done=0
+
+t=1230000 | A=255 B=255 | P= 255 | busy=1 done=0
+
+t=1250000 | A=255 B=255 | P= 765 | busy=1 done=0
+
+t=1270000 | A=255 B=255 | P= 765 | busy=1 done=0
+
+t=1290000 | A=255 B=255 | P= 765 | busy=1 done=0
+
+t=1310000 | A=255 B=255 | P= 1785 | busy=1 done=0
+
+t=1330000 | A=255 B=255 | P= 1785 | busy=1 done=0
+
+t=1350000 | A=255 B=255 | P= 1785 | busy=1 done=0
+
+t=1370000 | A=255 B=255 | P= 3825 | busy=1 done=0
+
+t=1390000 | A=255 B=255 | P= 3825 | busy=1 done=0
+
+t=1410000 | A=255 B=255 | P= 3825 | busy=1 done=0
+
+t=1430000 | A=255 B=255 | P= 7905 | busy=1 done=0
+
+t=1450000 | A=255 B=255 | P= 7905 | busy=1 done=0
+
+t=1470000 | A=255 B=255 | P= 7905 | busy=1 done=0
+
+t=1490000 | A=255 B=255 | P=16065 | busy=1 done=0
+
+t=1510000 | A=255 B=255 | P=16065 | busy=1 done=0
+
+t=1530000 | A=255 B=255 | P=16065 | busy=1 done=0
+
+t=1550000 | A=255 B=255 | P=32385 | busy=1 done=0
+
+t=1570000 | A=255 B=255 | P=32385 | busy=1 done=0
+
+t=1590000 | A=255 B=255 | P=32385 | busy=1 done=0
+
+t=1610000 | A=255 B=255 | P=65025 | busy=1 done=0
+
+t=1630000 | A=255 B=255 | P=65025 | busy=1 done=0
+
+t=1650000 | A=255 B=255 | P=65025 | busy=1 done=0
+
+t=1670000 | A=255 B=255 | P=65025 | busy=0 done=1
+
+PASS - Resultado: 65025
+
+t=1690000 | A=255 B=255 | P=65025 | busy=0 done=0
+
+Test 4: 100 x 0
+
+t=1790000 | A=100 B= 0 | P=65025 | busy=1 done=0
+
+t=1810000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1830000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1850000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1870000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1890000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1910000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1930000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1950000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1970000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=1990000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2010000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2030000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2050000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2070000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2090000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2110000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2130000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2150000 | A=100 B= 0 | P= 0 | busy=1 done=0
+
+t=2170000 | A=100 B= 0 | P= 0 | busy=0 done=1
+
+PASS - Resultado: 0
+
+t=2190000 | A=100 B= 0 | P= 0 | busy=0 done=0
+
+Test 5: 15 x 7
+
+t=2290000 | A= 15 B= 7 | P= 0 | busy=1 done=0
+
+t=2310000 | A= 15 B= 7 | P= 0 | busy=1 done=0
+
+t=2330000 | A= 15 B= 7 | P= 0 | busy=1 done=0
+
+t=2350000 | A= 15 B= 7 | P= 15 | busy=1 done=0
+
+t=2370000 | A= 15 B= 7 | P= 15 | busy=1 done=0
+
+t=2390000 | A= 15 B= 7 | P= 15 | busy=1 done=0
+
+t=2410000 | A= 15 B= 7 | P= 45 | busy=1 done=0
+
+t=2430000 | A= 15 B= 7 | P= 45 | busy=1 done=0
+
+t=2450000 | A= 15 B= 7 | P= 45 | busy=1 done=0
+
+t=2470000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2490000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2510000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2530000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2550000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2570000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2590000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2610000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2630000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2650000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2670000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2690000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2710000 | A= 15 B= 7 | P= 105 | busy=1 done=0
+
+t=2730000 | A= 15 B= 7 | P= 105 | busy=0 done=1
+
+PASS - Resultado: 105
+
+t=2750000 | A= 15 B= 7 | P= 105 | busy=0 done=0
+
+Fin de pruebas
+
+sim/tb_mult.v:131: $finish called at 2950000 (1ps)
+
+(digital) daniel@daniel-Nitro-AN515-55:~/Documentos/multiplicador$ 
