@@ -118,6 +118,16 @@ El multiplicador implementa el algoritmo shift-and-add:
    - done = 1, busy = 0
    - Retorna a IDLE
 ```
+## Diagramas
+![diag flujo multiplicador](https://github.com/user-attachments/assets/67117f8c-bab7-48eb-a41d-3b22cb43202a)
+
+![Datapath multiplicador](https://github.com/user-attachments/assets/b38eee89-7328-4819-9dd9-b8765638dd3d)
+
+![diag estados multiplicador](https://github.com/user-attachments/assets/a219e7ae-4a5a-499d-b26e-6af6b5f9922e)
+
+
+
+
 
 ### 2. Divisor
 
