@@ -136,28 +136,30 @@ El multiplicador implementa el algoritmo shift-and-add:
 ### 3. Raiz Cuadrada
 
 #### 3.1 Especificaciones iniciales:
-   Se pidio realizar el diseño de un algoritmo que realice raiz cuadrada de un numero en base 2, las limitaciones que se impusieron fue que el resultado final seria la parte entera del resultado, omitiendo los decimales. Los numeros de entrada podran ser de maximo 8 digitos en sistema binario.
+   Se pidio realizar el diseño de un algoritmo que realice raiz cuadrada de un numero en base 2, las limitaciones que se impusieron fue que el resultado final seria la parte entera del resultado, omitiendo los decimales. Los numeros de entrada serán de maximo 8 digitos en sistema binario.
    
 #### 3.2 Diseño:
    El diseño de la logica que seguiria el algoritmo esta basado en este [video](https://www.youtube.com/watch?v=t7kInZP8CpI).
    Para la logica que tendra el diseño sera: A'' esta concatenado con A y X'' con X
    A es la entrada, A'' inicialmente es los 2 bits mas significativos de A y luego se convierte en el residuo para la operación.
    X es una variable de apoyo y X'' donde se ira escribiendo el resultado y n el numero de operaciones por hacer.
-   1. Lo primero es X'' = 1 
-   2. Corro 2 posiciones a A'' y X = 01
-   3. Comparar si  A'' es mayor que X'' movido 2 posiciones (A'' >= X''<<2)
-   4. Si es mayor actualizo el valor de A'' como A'' = A'' - (X''<< 2) y X = 1
-   5. Si no es mayor X = 0
-   6. En ambos casos actualizo X'' como X'' = X'' << 1
-   7. Comparacion final de n para saber si debo hacer mas iteraciones, si n = 0 vuelvo a al paso 2, si n = 0 se termina el proceso.
+   1. Lo primero es X'' = 1 y corro 2 posiciones a A''
+   2. Le resto 1 a A''
+   3. Corro 2 posiciones a A'' y X = 01
+   4. Comparar si  A'' es mayor que X'' movido 2 posiciones (A'' >= X''<<2)
+   5. Si es mayor actualizo el valor de A'' como A'' = A'' - (X''<< 2) y X = 1
+   6. Si no es mayor X = 0
+   7. En ambos casos actualizo X'' como X'' = X'' << 1
+   8. Comparacion final de n para saber si debo hacer mas iteraciones, si n = 0 vuelvo a al paso 3, si n = 0 se termina el proceso.
 
 #### 3.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
    a. Diagrama de flujo del algoritmo
-   ![sqr](https://github.com/user-attachments/assets/2581e3fc-8a5a-4ff0-b55f-c45fab63b8a9)
+   ![sqr_algrt](https://github.com/user-attachments/assets/1c7ca85d-a7a3-4324-9d6a-c2cb4cb0c91a)
    b. Diagrama de bloques del camino de datos
-   ![dsaqrt](https://github.com/user-attachments/assets/f65443bf-f4f5-4be1-b230-edd8e4d10205)
+   ![sqr;data](https://github.com/user-attachments/assets/044e33d4-d616-4be2-b823-8fbb0323060a)
    c. Diagrama de estado de la máquina de control
-   ![ssqrt](https://github.com/user-attachments/assets/b38eb982-da08-43a3-8bb7-12d3384a1f3f)
+   ![sqrt_state](https://github.com/user-attachments/assets/30d77d83-88cb-4368-a405-b79ed2f2f5ed)
+
 
 #### 3.4 Implementación en codigo
 
