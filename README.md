@@ -157,3 +157,51 @@ Entrega del resultado final cuando n = 0.
 
 #### 4.4 Implementación en codigo
    [Caperta con codigo y TB de BCD](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/BCD)
+   5. Periféricos de la Calculadora
+5.1 Especificaciones iniciales:
+
+Se diseñaron cuatro periféricos que permiten la comunicación de la CPU del SOC con cada módulo de cálculo: multiplicador, divisor, raíz cuadrada y conversor BCD.
+Cada periférico recibe datos de la CPU a través del bus de memoria mapeada, ejecuta la operación correspondiente y devuelve el resultado.
+Además, cada periférico maneja señales de control como start, busy y done para coordinar la ejecución y evitar conflictos con la CPU.
+
+5.2 Diseño:
+
+El diseño de cada periférico incluye:
+
+Registro de entrada: almacena temporalmente el valor recibido desde la CPU.
+
+Señal de inicio (start): indica al módulo de cálculo que comience la operación.
+
+Módulo de cálculo interno: instancia del módulo correspondiente (mult_top, div_top, sqrt_calculator o bcd_converter).
+
+Señal de ocupado (busy): indica que la operación todavía se está ejecutando.
+
+Señal de resultado (d_out): devuelve el resultado al bus de la CPU cuando done se activa.
+
+Registros de control/estado: permiten a la CPU leer el estado actual del periférico y controlar su funcionamiento mediante dirección y lectura/escritura.
+
+El comportamiento general de cada periférico es:
+
+Cuando la CPU escribe un valor en la dirección del periférico, este se carga en el registro de entrada.
+
+Se activa start para que el módulo interno comience la operación.
+
+Mientras el módulo calcula, busy se mantiene activo.
+
+Una vez terminado, done se activa y el resultado queda disponible en d_out para la CPU.
+
+5.3 Creación de los wrappers de periféricos
+
+Cada periférico se implementó como un wrapper que conecta el módulo de cálculo con el bus del SOC, incluyendo:
+
+peripheral_mult.v → envía datos a mult_top.v
+
+peripheral_div.v → envía datos a div_top.v
+
+peripheral_sqrt.v → envía datos a sqrt_calculator.v
+
+peripheral_bcd.v → envía datos a bcd_converter.v
+
+Estos wrappers permiten que la CPU se comunique de manera sencilla y uniforme con todos los módulos de la calculadora.
+
+5.4 Implementación en código en la carpeta de perifèricos dentro de la secciòn de codigos calculadora
