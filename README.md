@@ -157,51 +157,60 @@ Entrega del resultado final cuando n = 0.
 
 #### 4.4 Implementación en codigo
    [Caperta con codigo y TB de BCD](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/BCD)
-   5. Periféricos de la Calculadora
+
+  5. SOC y Wrappers de Periféricos
 5.1 Especificaciones iniciales:
 
-Se diseñaron cuatro periféricos que permiten la comunicación de la CPU del SOC con cada módulo de cálculo: multiplicador, divisor, raíz cuadrada y conversor BCD.
-Cada periférico recibe datos de la CPU a través del bus de memoria mapeada, ejecuta la operación correspondiente y devuelve el resultado.
-Además, cada periférico maneja señales de control como start, busy y done para coordinar la ejecución y evitar conflictos con la CPU.
+Para que la calculadora funcione integrada con la CPU del SOC, se diseñó un módulo principal llamado SOC.v.
+Este módulo se encarga de:
+
+Instanciar la CPU FemtoRV32.
+
+Conectar la memoria RAM y los periféricos de entrada/salida.
+
+Asignar direcciones de memoria mapeada a cada periférico.
+
+Gestionar las señales de lectura (rd) y escritura (wr) de la CPU.
+
+Recibir los datos de los periféricos y devolverlos correctamente a la CPU mediante el bus.
+
+Los cuatro periféricos de cálculo que se conectan al SOC son: multiplicador, divisor, raíz cuadrada y conversor BCD.
 
 5.2 Diseño:
 
-El diseño de cada periférico incluye:
+El SOC se estructura de la siguiente manera:
 
-Registro de entrada: almacena temporalmente el valor recibido desde la CPU.
+CPU: FemtoRV32 que maneja todas las operaciones de memoria y comunicación con periféricos.
 
-Señal de inicio (start): indica al módulo de cálculo que comience la operación.
+Periféricos de cálculo: cada módulo de cálculo tiene su wrapper (peripheral_mult, peripheral_div, peripheral_sqrt, peripheral_bcd) que se conecta al bus del SOC.
 
-Módulo de cálculo interno: instancia del módulo correspondiente (mult_top, div_top, sqrt_calculator o bcd_converter).
+Decodificador de direcciones (Chip Select): asigna un rango de memoria para cada periférico. Por ejemplo:
 
-Señal de ocupado (busy): indica que la operación todavía se está ejecutando.
+0x0042 → Multiplicador
 
-Señal de resultado (d_out): devuelve el resultado al bus de la CPU cuando done se activa.
+0x0043 → Divisor
 
-Registros de control/estado: permiten a la CPU leer el estado actual del periférico y controlar su funcionamiento mediante dirección y lectura/escritura.
+0x0044 → Conversor BCD
 
-El comportamiento general de cada periférico es:
+0x0045 → Memoria adicional 
+Multiplexor de lectura: el SOC selecciona cuál de los periféricos devuelve datos a la CPU según la dirección de memoria solicitada.
 
-Cuando la CPU escribe un valor en la dirección del periférico, este se carga en el registro de entrada.
+Con esta organización, la CPU puede leer y escribir en cualquier periférico sin conflictos, y cada operación se realiza de manera secuencial y controlada.
 
-Se activa start para que el módulo interno comience la operación.
+5.3 Archivos implementados:
 
-Mientras el módulo calcula, busy se mantiene activo.
+SOC.v → top-level que conecta la CPU, memoria RAM y todos los periféricos.
 
-Una vez terminado, done se activa y el resultado queda disponible en d_out para la CPU.
+peripheral_mult.v → wrapper del multiplicador.
 
-5.3 Creación de los wrappers de periféricos
+peripheral_div.v → wrapper del divisor.
 
-Cada periférico se implementó como un wrapper que conecta el módulo de cálculo con el bus del SOC, incluyendo:
+peripheral_sqrt.v → wrapper de raíz cuadrada.
 
-peripheral_mult.v → envía datos a mult_top.v
+peripheral_bcd.v → wrapper del conversor BCD.
 
-peripheral_div.v → envía datos a div_top.v
+Todos estos archivos deben estar en la carpeta /rtl del repositorio, listos para compilar.
 
-peripheral_sqrt.v → envía datos a sqrt_calculator.v
+5.4 Implementación en código
 
-peripheral_bcd.v → envía datos a bcd_converter.v
-
-Estos wrappers permiten que la CPU se comunique de manera sencilla y uniforme con todos los módulos de la calculadora.
-
-5.4 Implementación en código en la carpeta de perifèricos dentro de la secciòn de codigos calculadora
+Carpeta con SOC y wrappers de periféricos
