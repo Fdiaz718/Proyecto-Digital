@@ -1,9 +1,10 @@
-// Wrapper de raíz cuadrada para FemtoRV32
+// peripheral_sqrt.v
+// Estè serìa el wrapper de la raiz cuadrada para conectarlo al SOC
 
-module peripheral_sqrt (
+module peripheral_sqrt(
     input wire clk,
     input wire reset,
-    input wire [15:0] d_in,
+    input wire [7:0] d_in,   // solo un operando
     input wire cs,
     input wire [4:0] addr,
     input wire rd,
@@ -13,10 +14,10 @@ module peripheral_sqrt (
 
     reg start;
     reg [7:0] A;
-    wire [7:0] X;
+    wire [3:0] X;
     wire done, valid;
 
-    sqrt_calculator sqrt (
+    sqrt_calculator sqrt1 (
         .clk(clk),
         .reset(reset),
         .start(start),
@@ -28,22 +29,25 @@ module peripheral_sqrt (
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            start <= 0;
             A <= 0;
-            d_out <= 0;
-        end else if (cs) begin
-            if (wr) begin
-                A <= d_in[7:0];
-                start <= 1;
-            end else begin
-                start <= 0;
-            end
+            start <= 0;
+        end else if (cs & wr) begin
+            A <= d_in;
+            start <= 1;
+        end else begin
+            start <= 0;
+        end
+    end
 
-            if (rd) begin
-                d_out <= {24'd0, X};
-            end
+    // logica de lectura
+    always @(*) begin
+        if (cs & rd) begin
+            d_out = {28'd0, X}; 
+        end else begin
+            d_out = 32'd0;
         end
     end
 
 endmodule
+
 
