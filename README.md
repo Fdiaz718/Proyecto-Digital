@@ -162,9 +162,7 @@ El multiplicador implementa el algoritmo shift-and-add:
 
 
 #### 3.4 Implementación en codigo
-
-
-
+   [Carpeta con codigos de raiz cuadrada y TB](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/Raiz%20Cuadrada)
 ### 4. Conversor BCD
 
 #### 4.1 Especificaciones iniciales:
