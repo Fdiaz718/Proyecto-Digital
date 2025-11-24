@@ -209,8 +209,6 @@ peripheral_sqrt.v → wrapper de raíz cuadrada.
 
 peripheral_bcd.v → wrapper del conversor BCD.
 
-Todos estos archivos deben estar en la carpeta /rtl del repositorio, listos para compilar.
-
 5.4 Implementación en código
 
 Carpeta con SOC y wrappers de periféricos
