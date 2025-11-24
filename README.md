@@ -10,6 +10,7 @@ Integrantes:
 
 ## CALCULADORA
 1. Multiplicador
+   
 1.1 Especificaciones iniciales:
 
 Se pidió diseñar un multiplicador secuencial de 8x8 bits que calcule el producto de dos números binarios.
