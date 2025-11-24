@@ -197,6 +197,4 @@ peripheral_bcd.v → bcd_periph.s
 
 5.4 Ubicación en el repositorio
 
-Todos los archivos .v de los periféricos se encuentran en /rtl y los programas assembly .s correspondientes están en /asm. Esto mantiene organizada la carpeta y facilita la compilación y simulación.
-
-Carpeta con códigos de periféricos y programas assembly
+Carpeta con códigos de periféricos y programas 
