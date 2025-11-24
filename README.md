@@ -158,57 +158,44 @@ Entrega del resultado final cuando n = 0.
 #### 4.4 Implementación en codigo
    [Caperta con codigo y TB de BCD](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/BCD)
 
-  5. SOC y Wrappers de Periféricos
+
+5. Periféricos para la Calculadora
+   
 5.1 Especificaciones iniciales:
 
-Para que la calculadora funcione integrada con la CPU del SOC, se diseñó un módulo principal llamado SOC.v.
-Este módulo se encarga de:
-
-Instanciar la CPU FemtoRV32.
-
-Conectar la memoria RAM y los periféricos de entrada/salida.
-
-Asignar direcciones de memoria mapeada a cada periférico.
-
-Gestionar las señales de lectura (rd) y escritura (wr) de la CPU.
-
-Recibir los datos de los periféricos y devolverlos correctamente a la CPU mediante el bus.
-
-Los cuatro periféricos de cálculo que se conectan al SOC son: multiplicador, divisor, raíz cuadrada y conversor BCD.
+Se crearon cuatro periféricos para poder conectar los módulos de la calculadora al procesador FemtoRV32. Cada periférico funciona como una especie de “puente” que permite leer y escribir datos desde el bus del procesador hacia el módulo de cálculo correspondiente.
+Los módulos conectados son: multiplicador, divisor, raíz cuadrada y conversor binario a BCD. Cada periférico maneja registros de control y estado para indicar cuándo la operación está en curso (busy) y cuándo terminó (done).
 
 5.2 Diseño:
 
-El SOC se estructura de la siguiente manera:
+Cada periférico se implementó como un wrapper que recibe las señales del procesador (mem_wdata, mem_addr, rd, wr) y las traduce a señales de entrada para el módulo de cálculo. Al mismo tiempo, captura las salidas del módulo y las coloca en el bus para que el procesador pueda leer el resultado.
 
-CPU: FemtoRV32 que maneja todas las operaciones de memoria y comunicación con periféricos.
+El flujo general de cada periférico es:
 
-Periféricos de cálculo: cada módulo de cálculo tiene su wrapper (peripheral_mult, peripheral_div, peripheral_sqrt, peripheral_bcd) que se conecta al bus del SOC.
+Verificar si la dirección del bus coincide con el chip select del periférico.
 
-Decodificador de direcciones (Chip Select): asigna un rango de memoria para cada periférico. Por ejemplo:
+Si se escribe (wr), cargar los operandos en el módulo de cálculo y activar la señal start.
 
-0x0042 → Multiplicador
+Durante la operación, la señal busy indica que el módulo está procesando.
 
-0x0043 → Divisor
+Cuando la operación termina, la señal done se activa y los datos de salida se colocan en el registro de lectura del periférico (d_out).
 
-0x0044 → Conversor BCD
+El procesador puede entonces leer el resultado desde el bus.
 
-0x0045 → Memoria adicional 
-Multiplexor de lectura: el SOC selecciona cuál de los periféricos devuelve datos a la CPU según la dirección de memoria solicitada.
+5.3 Implementación en código
 
-Con esta organización, la CPU puede leer y escribir en cualquier periférico sin conflictos, y cada operación se realiza de manera secuencial y controlada.
+Cada periférico tiene su propio archivo .v y se probó con un programa assembly .s específico para comunicarse con él:
 
-5.3 Archivos implementados:
+peripheral_mult.v → mult_periph.s
 
-SOC.v → top-level que conecta la CPU, memoria RAM y todos los periféricos.
+peripheral_div.v → div_periph.s
 
-peripheral_mult.v → wrapper del multiplicador.
+peripheral_sqrt.v → sqrt_periph.s
 
-peripheral_div.v → wrapper del divisor.
+peripheral_bcd.v → bcd_periph.s
 
-peripheral_sqrt.v → wrapper de raíz cuadrada.
+5.4 Ubicación en el repositorio
 
-peripheral_bcd.v → wrapper del conversor BCD.
+Todos los archivos .v de los periféricos se encuentran en /rtl y los programas assembly .s correspondientes están en /asm. Esto mantiene organizada la carpeta y facilita la compilación y simulación.
 
-5.4 Implementación en código
-
-Carpeta con SOC y wrappers de periféricos
+Carpeta con códigos de periféricos y programas assembly
