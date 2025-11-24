@@ -34,7 +34,7 @@ Repetir hasta completar 8 iteraciones.
 
 Señalar done y liberar busy cuando el cálculo termina.
 
-1.3 Creación algoritmo, camino de datos y máquina de estados
+1.3 Creación de los respectivos diagramas
 
 ![diag flujo multiplicador](https://github.com/user-attachments/assets/67117f8c-bab7-48eb-a41d-3b22cb43202a)
 
@@ -77,7 +77,11 @@ Señalar done y liberar busy cuando el cálculo termina.
 
 Si B = 0, levantar div_zero.
 
-2.3 Creación algoritmo, camino de datos y máquina de estados
+2.3 Creación de los respectivos diagramas
+![Sin título](https://github.com/user-attachments/assets/9691eefe-d9db-4504-9167-d21b9235f4e1)
+![WhatsApp Image 2025-11-24 at 8 52 58 AM](https://github.com/user-attachments/assets/b6fdf33c-5c00-44b4-a46c-b57298fa823b)
+![diag ](https://github.com/user-attachments/assets/fa3b3a75-e1b1-4931-938e-f3ca9442284c)
+
 
 
 
