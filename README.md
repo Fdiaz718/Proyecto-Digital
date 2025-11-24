@@ -166,9 +166,40 @@ El multiplicador implementa el algoritmo shift-and-add:
 
 
 ### 4. Conversor BCD
+
 #### 4.1 Especificaciones iniciales:
+   Se solicitó realizar el diseño de un conversor que transforme un número binario a su representación BCD (Binary Coded Decimal) utilizando el algoritmo estándar conocido como Double Dabble o método de Add-3/Shift.
+   La entrada es un número binario de 8  bits.
+   La salida se compone de tres dígitos BCD: unidades (X), decenas (X') y centenas (X'').
+   El algoritmo debe recorrer todos los bits de la entrada y producir un resultado válido al final del proceso.
+
 #### 4.2 Diseño:
-   Para entender como 
+   Para el diseño del convertidor se utilizó la lógica del algoritmo Double Dabble. La idea principal del método consiste en que antes de cada desplazamiento, cada dígito BCD parcial es comparado con 5.
+   Si alguno de ellos es mayor o igual que 5, a ese dígito se le suma 3. Luego se realiza un corrimiento hacia la izquierda desplazando también el bit más significativo del número binario hacia los registros BCD.
+   Este diseño estaba basado en este [video](https://www.youtube.com/watch?v=RDoYo3yOL_E) donde se detalla la logica del proceso, ademas de ejemplos paso a paso
+
+   El proceso general es:
+
+   1. Inicialización de X, X', X'' en 0 y carga del número binario en binary.
+
+   2. Comparación de cada dígito BCD con 5.
+
+   3. Suma opcional de 3 a los dígitos ≥ 5.
+
+   4. Corrimiento hacia la izquierda propagando los bits entre los dígitos BCD y binary.
+
+   5. Decremento de n y repetición mientras queden bits por procesar.
+
+Entrega del resultado final cuando n = 0.
 #### 4.3 Creación algoritmo, camino de datos (data pack) y maquina de estados
-   
+   a. Diagrama de flujo del algoritmo
+   ![bcd_algrt](https://github.com/user-attachments/assets/def57e33-6353-4856-93b9-667dcd0faef2)
+
+   b. Diagrama de bloques del camino de datos
+   ![bcd_data](https://github.com/user-attachments/assets/a275291a-e734-459a-9530-cf8401579b7d)
+
+   c. Diagrama de estado de la máquina de control
+   ![bcd_statte](https://github.com/user-attachments/assets/767dddb3-01b4-46c2-9e51-db5a1a3f45e8)
+
 #### 4.4 Implementación en codigo
+   [Caperta con codigo y TB de BCD](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/BCD)
