@@ -82,7 +82,9 @@ Si B = 0, levantar div_zero.
 ![WhatsApp Image 2025-11-24 at 8 52 58 AM](https://github.com/user-attachments/assets/b6fdf33c-5c00-44b4-a46c-b57298fa823b)
 ![diag ](https://github.com/user-attachments/assets/fa3b3a75-e1b1-4931-938e-f3ca9442284c)
 
+1.4 Implementación en código
 
+Carpeta con códigos del divisor y testbench
 
 
 
