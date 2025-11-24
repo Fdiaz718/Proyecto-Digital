@@ -117,7 +117,7 @@ El multiplicador implementa el algoritmo shift-and-add:
    - Operación completa
    - done = 1, busy = 0
    - Retorna a IDLE
-
+```
 
 ### 2. Divisor
 
