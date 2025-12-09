@@ -1,0 +1,28 @@
+# Orden de archivos para síntesis
+
+# Multiplicador
+dp_mult.v
+control_mult.v
+mult_top.v
+
+# Divisor
+dp_div.v
+control_div.v
+div_top.v
+
+# Raíz Cuadrada
+sqrt_datapath.v
+sqrt_control.v
+sqrt_top.v
+
+# BCD
+bcd_converter.v
+
+# Calculadora Core
+calc_core.v
+
+# Periféricos FemtoRV32
+peripheral_mult.v
+peripheral_div.v
+peripheral_sqrt.v
+peripheral_bcd.v
