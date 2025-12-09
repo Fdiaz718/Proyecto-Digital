@@ -6,7 +6,7 @@ Integrantes:
 
 
 # Panel led
-Para tener toda la información sobre el proyecto de panel led revisar [este reposiotorio](https://github.com/Fdiaz718/Panel-Led-8bpp).
+Para tener toda la información sobre el proyecto de panel led revisar [este repositorio](https://github.com/Fdiaz718/Panel-Led-8bpp).
 
 ## CALCULADORA
 1. Multiplicador
