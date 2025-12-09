@@ -1,10 +1,9 @@
-// peripheral_bcd.v
-// ESte serìa el wrapper del conversor BCD para conectarlo al SOC
+// Este serìa nuestro Wrapper del conversor binario a BCD para FemtoRV32
 
-module peripheral_bcd(
+module peripheral_bcd (
     input wire clk,
     input wire reset,
-    input wire [7:0] d_in,  
+    input wire [15:0] d_in,
     input wire cs,
     input wire [4:0] addr,
     input wire rd,
@@ -17,7 +16,7 @@ module peripheral_bcd(
     wire [3:0] X, X_prime, X_prime_prime;
     wire done, valid;
 
-    bcd_converter bcd1 (
+    bcd_converter #(.WIDTH(8)) bcd (
         .clk(clk),
         .reset(reset),
         .start(start),
@@ -28,25 +27,23 @@ module peripheral_bcd(
         .done(done),
         .valid(valid)
     );
-    
+
     always @(posedge clk or posedge reset) begin
         if (reset) begin
+            start <= 0;
             A <= 0;
-            start <= 0;
-        end else if (cs & wr) begin
-            A <= d_in;
-            start <= 1;
-        end else begin
-            start <= 0;
-        end
-    end
+            d_out <= 0;
+        end else if (cs) begin
+            if (wr) begin
+                A <= d_in[7:0];
+                start <= 1;
+            end else begin
+                start <= 0;
+            end
 
- 
-    always @(*) begin
-        if (cs & rd) begin
-            d_out = {X_prime_prime, X_prime, X, 20'd0}; // concateno en 32 bits
-        end else begin
-            d_out = 32'd0;
+            if (rd) begin
+                d_out <= {20'd0, X_prime_prime, X_prime, X};
+            end
         end
     end
 
