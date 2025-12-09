@@ -1,8 +1,5 @@
 # Proyecto Calculadora Digital
 
-**Autores:** Daniel & Compañero  
-**Curso:** Diseño Digital  
-**Fecha:** Diciembre 2024
 
 ---
 
@@ -26,7 +23,7 @@ Esta guía explica cómo implementar la calculadora en la Colorlight 5A-75E.
 
 ---
 
-## Lo que Necesitas
+## Lo que necesitamos
 
 **Hardware:**
 - Colorlight 5A-75E (la que tenemos)
@@ -185,6 +182,5 @@ lw t1, 0x400(zero)   # leer resultado
 
 ---
 
-Cualquier duda, revisar los testbenches en `simulacion/` para ver cómo se usan los módulos.
 
 ¡Suerte! 🚀
