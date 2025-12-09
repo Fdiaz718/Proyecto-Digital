@@ -158,43 +158,206 @@ Entrega del resultado final cuando n = 0.
 
 #### 4.4 Implementación en codigo
    [Caperta con codigo y TB de BCD](https://github.com/Fdiaz718/Proyecto-Digital/tree/main/Codigos%20Calculadora/BCD)
+   ## Periféricos para FemtoRV32
+
+Los periféricos son wrappers que permiten conectar los módulos de la calculadora al bus de memoria del procesador FemtoRV32. Cada periférico mapea las señales de control y datos al espacio de direcciones del procesador.
+
+### Estructura de los Periféricos
+
+Cada periférico sigue el mismo patrón de interfaz:
+```verilog
+module peripheral_xxx (
+    input wire clk,
+    input wire reset,
+    input wire [15:0] d_in,    // Datos de entrada desde el bus
+    input wire cs,              // Chip select
+    input wire [4:0] addr,      // Dirección interna
+    input wire rd,              // Señal de lectura
+    input wire wr,              // Señal de escritura
+    output reg [31:0] d_out     // Datos de salida al bus
+);
+```
+
+### Mapeo de Memoria
+
+Los periféricos están mapeados en las siguientes direcciones de memoria:
+
+| Dirección | Periférico | Descripción |
+|-----------|------------|-------------|
+| 0x00000400 | Multiplicador | Escribe A y B, lee producto P |
+| 0x00000410 | Divisor | Escribe A y B, lee cociente y residuo |
+| 0x00000420 | Raíz Cuadrada | Escribe A, lee resultado |
+| 0x00000430 | Conversor BCD | Escribe número binario, lee dígitos BCD |
+
+### Uso desde Assembly
+
+Para usar los periféricos desde código assembly RISC-V:
+```assembly
+# Ejemplo: Multiplicar 12 x 8
+li t0, 0x0C08           # A=12 en bits [15:8], B=8 en bits [7:0]
+sw t0, 0x400(zero)      # Escribir a dirección del multiplicador
+nop                      # Esperar ciclos de procesamiento
+lw t1, 0x400(zero)      # Leer resultado (96 en t1)
+```
+
+### Archivos de Periféricos
+
+- `peripheral_mult.v`: Wrapper del multiplicador
+- `peripheral_div.v`: Wrapper del divisor  
+- `peripheral_sqrt.v`: Wrapper de raíz cuadrada
+- `peripheral_bcd.v`: Wrapper del conversor BCD
+
+Todos los periféricos incluyen sincronización de señales start y lectura de banderas de estado (done, busy, error).
+
+---
+
+## Calculadora Integradora
+
+El módulo `calc_core.v` integra los cuatro módulos aritméticos en un único sistema controlado por un selector de operación.
+
+### Interfaz
+```verilog
+module calc_core (
+    input  wire        clk,
+    input  wire        reset,
+    input  wire        start,       // Iniciar cálculo
+    input  wire [1:0]  op,          // Selector de operación
+    input  wire [7:0]  A,           // Operando A
+    input  wire [7:0]  B,           // Operando B
+    output reg  [15:0] result,      // Resultado
+    output reg         busy,        // Calculando
+    output reg         done,        // Terminado
+    output reg         error        // Error (ej: división por cero)
+);
+```
+
+### Selector de Operación
+
+El campo `op` determina qué módulo se activa:
+
+- `op = 2'b00`: Multiplicación (A × B)
+- `op = 2'b01`: División (A ÷ B)
+- `op = 2'b10`: Raíz cuadrada (√A)
+- `op = 2'b11`: Conversión BCD (A → BCD)
+
+### Formato de Resultados
+
+Dependiendo de la operación, el campo `result[15:0]` tiene diferentes interpretaciones:
+
+**Multiplicación:**
+- `result[15:0]`: Producto completo de 16 bits
+
+**División:**
+- `result[15:8]`: Cociente
+- `result[7:0]`: Residuo
+
+**Raíz Cuadrada:**
+- `result[9:0]`: Resultado de 10 bits
+- `result[15:10]`: Ceros
+
+**BCD:**
+- `result[11:8]`: Centenas
+- `result[7:4]`: Decenas
+- `result[3:0]`: Unidades
+- `result[15:12]`: Ceros
+
+### Manejo de Errores
+
+La señal `error` se activa en las siguientes condiciones:
+- División por cero (B = 0 en operación de división)
+- Conversión BCD inválida (señal `valid` del conversor en bajo)
+
+---
+
+## Simulación y Verificación
+
+### Testbenches Incluidos
+
+Cada módulo tiene su testbench correspondiente:
+
+- `tb_mult.v`: Prueba el multiplicador con 5 casos
+- `tb_div.v`: Prueba el divisor incluyendo división por cero
+- `sqrt_testbench.v`: Prueba la raíz cuadrada con varios valores
+- `bcd_converter_tb.v`: Verifica la conversión BCD
+- `tb_calc_core.v`: Prueba la calculadora integrada completa
+
+### Compilar y Simular
+
+Para simular cualquier módulo:
+```bash
+# Ejemplo con el multiplicador
+cd multiplicador
+iverilog -o mult_sim sim/tb_mult.v rtl/*.v
+vvp mult_sim
+gtkwave multiplicador.vcd
+```
+
+Para simular la calculadora completa:
+```bash
+cd integradora
+iverilog -o calc_sim sim/tb_calc_core.v rtl/calc_core.v \
+    ../multiplicador/rtl/*.v ../divisor/rtl/*.v \
+    ../raiz/rtl/*.v ../bcd/rtl/bcd_converter.v
+vvp calc_sim
+```
+
+### Resultados de Simulación
+
+Todos los módulos pasaron sus tests de verificación:
+
+**Multiplicador:**
+- 5 × 3 = 15 (PASS)
+- 12 × 8 = 96 (PASS)
+- 255 × 255 = 65025 (PASS)
+- 100 × 0 = 0 (PASS)
+- 15 × 7 = 105 (PASS)
+
+**Divisor:**
+- 15 ÷ 3 = 5 resto 0 (PASS)
+- 20 ÷ 4 = 5 resto 0 (PASS)
+- 17 ÷ 5 = 3 resto 2 (PASS)
+- 255 ÷ 10 = 25 resto 5 (PASS)
+- 100 ÷ 0 = error detectado (PASS)
+
+**Raíz Cuadrada:**
+- √144 = 12 (PASS)
+- √100 = 10 (PASS)
+- √255 = 15 (PASS)
+
+**Conversor BCD:**
+- 0 → 000 (PASS)
+- 9 → 009 (PASS)
+- 123 → 123 (PASS)
+- 255 → 255 (PASS)
+
+**Calculadora Integrada:**
+- Multiplicación 12 × 8 = 96 (PASS)
+- División 17 ÷ 5 = 3 resto 2 (PASS)
+- Raíz √144 = 12 (PASS)
+- BCD 123 → 1-2-3 (PASS)
+- División por cero detectada (PASS)
+
+---
+
+## Implementación en FPGA
+
+### Hardware Target
+
+El proyecto está diseñado para implementarse en la **Colorlight 5A-75E**:
+- FPGA: Anlogic EG4S20BG256
+- Clock: 25 MHz
+- Comunicación: 2x FT232RL (UART)
 
 
-5. Periféricos para la Calculadora
-   
-5.1 Especificaciones iniciales:
+### Archivos de Firmware
 
-Se crearon cuatro periféricos para poder conectar los módulos de la calculadora al procesador FemtoRV32. Cada periférico funciona como una especie de “puente” que permite leer y escribir datos desde el bus del procesador hacia el módulo de cálculo correspondiente.
-Los módulos conectados son: multiplicador, divisor, raíz cuadrada y conversor binario a BCD. Cada periférico maneja registros de control y estado para indicar cuándo la operación está en curso (busy) y cuándo terminó (done).
+Los programas de prueba en assembly están en la carpeta `perifericos/`:
 
-5.2 Diseño:
+- `calc_test.s`: Programa completo que prueba todos los módulos
+- `mult_periph.s`: Test individual del multiplicador
+- `div_periph.s`: Test individual del divisor
+- `sqrt_periph.s`: Test individual de raíz cuadrada
+- `bcd_periph.s`: Test individual del conversor BCD
 
-Cada periférico se implementó como un wrapper que recibe las señales del procesador (mem_wdata, mem_addr, rd, wr) y las traduce a señales de entrada para el módulo de cálculo. Al mismo tiempo, captura las salidas del módulo y las coloca en el bus para que el procesador pueda leer el resultado.
 
-El flujo general de cada periférico es:
 
-Verificar si la dirección del bus coincide con el chip select del periférico.
-
-Si se escribe (wr), cargar los operandos en el módulo de cálculo y activar la señal start.
-
-Durante la operación, la señal busy indica que el módulo está procesando.
-
-Cuando la operación termina, la señal done se activa y los datos de salida se colocan en el registro de lectura del periférico (d_out).
-
-El procesador puede entonces leer el resultado desde el bus.
-
-5.3 Implementación en código
-
-Cada periférico tiene su propio archivo .v y se probó con un programa assembly .s específico para comunicarse con él:
-
-peripheral_mult.v → mult_periph.s
-
-peripheral_div.v → div_periph.s
-
-peripheral_sqrt.v → sqrt_periph.s
-
-peripheral_bcd.v → bcd_periph.s
-
-5.4 Ubicación en el repositorio
-
-Carpeta con códigos de periféricos y programas 
