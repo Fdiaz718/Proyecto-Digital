@@ -1,5 +1,5 @@
 // Módulo: hub75_fsm.v
-// Descripción: Máquina de estados basada en tus diagramas
+// Descripción: Máquina de estados basada en nuestro diagramas
 
 module hub75_fsm (
     input wire clk,
