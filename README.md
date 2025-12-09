@@ -2,7 +2,7 @@
 Integrantes:
 * Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
 * Daniel Felipe Castro Gonzalez - dcastogon@unal.edu.co - 1052836051
-* Pablo Paez Linarez - ppaezl@unal.edu.co
+* Pablo Paez Linarez - ppaezl@unal.edu.co - 1011082418
 
 
 # Panel led
