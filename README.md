@@ -5,8 +5,8 @@ Integrantes:
 * Pablo Paez Linarez - ppaezl@unal.edu.co
 
 
- DEPENDENCIAS
-
+# Panel led
+Para tener toda la información sobre el proyecto de panel led revisar [este reposiotorio](https://github.com/Fdiaz718/Panel-Led-8bpp).
 
 ## CALCULADORA
 1. Multiplicador
