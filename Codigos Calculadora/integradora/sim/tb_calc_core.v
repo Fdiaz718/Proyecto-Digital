@@ -43,8 +43,8 @@ module tb_calc_core;
         start = 1; #20; start = 0;
         wait(done); #20;
         $display("  Resultado: %d (esperado: 96)", result);
-        if (result == 16'd96) $display("  ✅ PASS");
-        else $display("  ❌ FAIL");
+        if (result == 16'd96) $display("  PASS");
+        else $display("  FAIL");
         $display("");
         #100;
         
@@ -54,8 +54,8 @@ module tb_calc_core;
         start = 1; #20; start = 0;
         wait(done); #20;
         $display("  Cociente: %d, Residuo: %d", result[15:8], result[7:0]);
-        if (result[15:8] == 8'd3 && result[7:0] == 8'd2) $display("  ✅ PASS");
-        else $display("  ❌ FAIL");
+        if (result[15:8] == 8'd3 && result[7:0] == 8'd2) $display("  PASS");
+        else $display("  FAIL");
         $display("");
         #100;
         
@@ -65,8 +65,8 @@ module tb_calc_core;
         start = 1; #20; start = 0;
         wait(done); #20;
         $display("  Resultado: %d (esperado: 12)", result[9:0]);
-        if (result[9:0] == 10'd12) $display("  ✅ PASS");
-        else $display("  ❌ FAIL");
+        if (result[9:0] == 10'd12) $display("  PASS");
+        else $display("   FAIL");
         $display("");
         #100;
         
@@ -77,8 +77,8 @@ module tb_calc_core;
         wait(done); #20;
         $display("  BCD: %d%d%d", result[11:8], result[7:4], result[3:0]);
         if (result[11:8] == 4'd1 && result[7:4] == 4'd2 && result[3:0] == 4'd3) 
-            $display("  ✅ PASS");
-        else $display("  ❌ FAIL");
+            $display("   PASS");
+        else $display("   FAIL");
         $display("");
         #100;
         
@@ -87,8 +87,8 @@ module tb_calc_core;
         op = 2'b01; A = 8'd100; B = 8'd0;
         start = 1; #20; start = 0;
         wait(done); #20;
-        if (error) $display("  ✅ PASS - Error detectado");
-        else $display("  ❌ FAIL - Error no detectado");
+        if (error) $display("  PASS - Error detectado");
+        else $display("   FAIL - Error no detectado");
         
         #200;
         $display("");
