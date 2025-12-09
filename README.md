@@ -1,7 +1,7 @@
 # Proyecto Electronica Digital
 Integrantes:
 * Felipe Diaz Gordillo - fdiazgo@unal.edu.co - 1013100552
-* Daniel Felipe Castro Gonzalez - dcastogon@unal.edu.co - 1052836051
+* Daniel Felipe Castro Gonzalez - dcastrogon@unal.edu.co - 1052836051
 * Pablo Paez Linarez - ppaezl@unal.edu.co - 1011082418
 
 
