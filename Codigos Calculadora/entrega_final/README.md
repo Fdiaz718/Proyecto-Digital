@@ -17,9 +17,9 @@ Todo está diseñado para implementarse en la FPGA Colorlight 5A-75E usando el p
 
 ## Estructura del Proyecto
 cat > entrega_final/docs/IMPLEMENTACION.md << 'EOF'
-# Guía de Implementación en FPGA
+# Implementación en FPGA
 
-Esta guía explica cómo implementar la calculadora en la Colorlight 5A-75E.
+Esta guía explica cómo se implemento la calculadora en la Colorlight 5A-75E.
 
 ---
 
@@ -183,4 +183,4 @@ lw t1, 0x400(zero)   # leer resultado
 ---
 
 
-¡Suerte! 🚀
+
